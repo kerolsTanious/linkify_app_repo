@@ -8,4 +8,14 @@ abstract class Styles {
     fontSize: 24.sp,
     color: ColorManager.texColor,
   );
+  static TextStyle textStyle20 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 20.sp,
+    color: Colors.white,
+  );
+  static TextStyle textStyle18 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 18.sp,
+    color: Colors.white,
+  );
 }

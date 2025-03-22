@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
+import 'package:linkify_app/features/on_boarding/presentation/view/onboarding.dart';
 import 'package:linkify_app/features/splash/presentation/view/widgets/animated_text.dart';
 
 class SplashScreenBody extends StatefulWidget {
@@ -32,6 +33,15 @@ class _SplashScreenBodyState extends State<SplashScreenBody>
     ).animate(animationController);
 
     animationController.forward();
+
+    Future.delayed(
+      const Duration(milliseconds: 1500),
+      () {
+        if (mounted) {
+          navToOnboardingScreen();
+        }
+      },
+    );
   }
 
   @override
@@ -55,5 +65,13 @@ class _SplashScreenBodyState extends State<SplashScreenBody>
       ],
     );
   }
-}
 
+  navToOnboardingScreen() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Onboarding(),
+      ),
+    );
+  }
+}
