@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:linkify_app/core/reusable_components/onboarding_page.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
 import 'package:linkify_app/core/utils/color_manager.dart';
+import 'package:linkify_app/core/utils/routes.dart';
 import 'package:linkify_app/core/utils/strings_manager.dart';
 import 'package:linkify_app/core/utils/styles_manager.dart';
-import 'package:linkify_app/features/splash/presentation/view/splash.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreenBody extends StatefulWidget {
@@ -39,21 +40,15 @@ class _OnboardingScreenBodyState extends State<OnboardingScreenBody> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Splash(),
-                      ),
-                    );
+                    context.push(RoutesManager.kSignUp);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[200],
                   ),
                   child: Text(
                     "Skip",
-                    style: Styles.textStyle20.copyWith(
-                      color: ColorManager.texColor
-                    ),
+                    style: Styles.textStyle20
+                        .copyWith(color: ColorManager.texColor),
                   ),
                 ),
               ),
@@ -62,12 +57,7 @@ class _OnboardingScreenBodyState extends State<OnboardingScreenBody> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (pageIndex == 2) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Splash(),
-                        ),
-                      );
+                      context.push(RoutesManager.kSignUp);
                     } else {
                       widget.pageController.nextPage(
                         duration: const Duration(milliseconds: 500),

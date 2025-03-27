@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
-import 'package:linkify_app/features/on_boarding/presentation/view/onboarding.dart';
+import 'package:linkify_app/core/utils/routes.dart';
 import 'package:linkify_app/features/splash/presentation/view/widgets/animated_text.dart';
+import 'package:go_router/go_router.dart';
+
 
 class SplashScreenBody extends StatefulWidget {
   const SplashScreenBody({super.key});
@@ -24,7 +26,7 @@ class _SplashScreenBodyState extends State<SplashScreenBody>
     super.initState();
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 1500),
     );
 
     slidingAnimation = Tween<Offset>(
@@ -35,7 +37,7 @@ class _SplashScreenBodyState extends State<SplashScreenBody>
     animationController.forward();
 
     Future.delayed(
-      const Duration(milliseconds: 1500),
+      const Duration(seconds: 2),
       () {
         if (mounted) {
           navToOnboardingScreen();
@@ -57,7 +59,7 @@ class _SplashScreenBodyState extends State<SplashScreenBody>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Image.asset(
-          AssetsManager.splashLogo,
+          AssetsManager.splashLogoTrans,
           height: 200.h,
           width: 200.w,
         ),
@@ -67,11 +69,6 @@ class _SplashScreenBodyState extends State<SplashScreenBody>
   }
 
   navToOnboardingScreen() async {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Onboarding(),
-      ),
-    );
+    context.push(RoutesManager.kOnboarding);
   }
 }

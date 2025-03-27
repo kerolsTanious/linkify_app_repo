@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:linkify_app/features/splash/presentation/view/splash.dart';
+import 'package:linkify_app/core/utils/routes.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
+        return MaterialApp.router(
+          routerConfig: RoutesManager.route,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -21,7 +22,6 @@ class MyApp extends StatelessWidget {
           ).copyWith(
             scaffoldBackgroundColor: Colors.white,
           ),
-          home: const Splash(),
         );
       },
     );
