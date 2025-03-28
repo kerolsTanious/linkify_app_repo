@@ -16,4 +16,16 @@ class ApiManager {
     );
     return response;
   }
+
+  Future<Response> patchRequest({
+    required String baseUrl,
+    required String endPoint,
+    required Map<String, dynamic> body,
+  }) async {
+    var response = await _dio.patch(
+      "$baseUrl$endPoint",
+      data: body,
+    );
+    return response;
+  }
 }
