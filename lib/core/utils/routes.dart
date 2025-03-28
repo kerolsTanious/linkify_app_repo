@@ -24,7 +24,10 @@ abstract class RoutesManager {
       ),
       GoRoute(
         path: kConfirmEmail,
-        builder: (context, state) => const ConfirmEmail(),
+        builder: (context, state) {
+          final String email = state.extra as String;
+          return ConfirmEmail(email: email);
+        },
       ),
     ],
   );

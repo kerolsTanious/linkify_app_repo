@@ -12,8 +12,9 @@ class CustomAuthTextFormFiled extends StatelessWidget {
     required this.textInputAction,
     this.obscureText,
     this.suffixIcon,
-    required this.validator,
-    required this.controller,
+    this.validator,
+    this.controller,
+    this.readOnly = false,
   });
 
   final String titleText;
@@ -23,8 +24,9 @@ class CustomAuthTextFormFiled extends StatelessWidget {
   final TextInputAction textInputAction;
   final bool? obscureText;
   final IconButton? suffixIcon;
-  final String? Function(String?) validator;
-  final TextEditingController controller;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +67,7 @@ class CustomAuthTextFormFiled extends StatelessWidget {
               color: Colors.red.shade900,
             ),
           ),
+          readOnly: readOnly,
           keyboardType: textInputType,
           textInputAction: textInputAction,
           obscureText: obscureText ?? false,

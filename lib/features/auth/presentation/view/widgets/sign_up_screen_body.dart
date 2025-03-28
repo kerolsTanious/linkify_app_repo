@@ -185,9 +185,13 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
                   textColor: Colors.white,
                   fontSize: 16.0,
                 );
-                context.push(RoutesManager.kConfirmEmail);
+                context.push(
+                  RoutesManager.kConfirmEmail,
+                  extra: emailController.text,
+                );
               }
               if (state is SignUpFailure) {
+                print("error =========> ${state.errorMessage}");
                 Fluttertoast.showToast(
                   msg: state.errorMessage,
                   toastLength: Toast.LENGTH_SHORT,
