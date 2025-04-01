@@ -15,6 +15,7 @@ class CustomAuthTextFormFiled extends StatelessWidget {
     this.validator,
     this.controller,
     this.readOnly = false,
+    this.maxLength,
   });
 
   final String titleText;
@@ -27,6 +28,7 @@ class CustomAuthTextFormFiled extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final bool readOnly;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +69,7 @@ class CustomAuthTextFormFiled extends StatelessWidget {
               color: Colors.red.shade900,
             ),
           ),
+          maxLength: maxLength,
           readOnly: readOnly,
           keyboardType: textInputType,
           textInputAction: textInputAction,

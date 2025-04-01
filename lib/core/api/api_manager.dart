@@ -13,6 +13,14 @@ class ApiManager {
     var response = await _dio.post(
       "$baseUrl$endPoints",
       data: body,
+      options: Options(
+        validateStatus: (status) {
+          if (status! < 500) {
+            return true;
+          }
+          return false;
+        },
+      ),
     );
     return response;
   }
@@ -25,6 +33,14 @@ class ApiManager {
     var response = await _dio.patch(
       "$baseUrl$endPoint",
       data: body,
+      options: Options(
+        validateStatus: (status) {
+          if (status! < 500) {
+            return true;
+          }
+          return false;
+        },
+      ),
     );
     return response;
   }

@@ -8,6 +8,7 @@ import 'package:linkify_app/core/reusable_components/custom_auth_buttom.dart';
 import 'package:linkify_app/core/reusable_components/custom_auth_text_form_filed.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
 import 'package:linkify_app/core/utils/routes.dart';
+import 'package:linkify_app/core/utils/styles_manager.dart';
 import 'package:linkify_app/features/auth/data/model/sign_up_input_model.dart';
 import 'package:linkify_app/features/auth/presentation/view_model/sign_up_cubit/sign_up_cubit.dart';
 import 'package:linkify_app/features/auth/presentation/view_model/sign_up_cubit/sign_up_state.dart';
@@ -91,6 +92,7 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
             textInputType: TextInputType.phone,
             textInputAction: TextInputAction.next,
             controller: phoneController,
+            maxLength: 11,
             validator: (value) {
               if (value!.isEmpty) {
                 return "Please enter your mobile number";
@@ -191,7 +193,7 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
                 );
               }
               if (state is SignUpFailure) {
-                print("error =========> ${state.errorMessage}");
+                print("error ===========================> ${state.errorMessage}");
                 Fluttertoast.showToast(
                   msg: state.errorMessage,
                   toastLength: Toast.LENGTH_SHORT,
@@ -227,6 +229,22 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
                 },
               );
             },
+          ),
+          SizedBox(height: 30.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Already have an account?", style: Styles.textStyle18),
+              TextButton(
+                onPressed: () {
+                  context.push(RoutesManager.kLogin);
+                },
+                child: Text(
+                  "Login",
+                  style: Styles.textStyle18,
+                ),
+              ),
+            ],
           ),
         ],
       ),

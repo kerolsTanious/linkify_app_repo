@@ -4,9 +4,10 @@ import 'package:linkify_app/core/api/end_points.dart';
 import 'package:linkify_app/core/constants.dart';
 import 'package:linkify_app/features/auth/data/model/ConfirmEmailResponseModel.dart';
 import 'package:linkify_app/features/auth/data/model/confirm_email_input_model.dart';
+import 'package:linkify_app/features/auth/data/model/login_input_model.dart';
+import 'package:linkify_app/features/auth/data/model/login_model/LoginResponseModel.dart';
 import 'package:linkify_app/features/auth/data/model/sign_up_input_model.dart';
 import 'package:linkify_app/features/auth/data/model/sign_up_model/SignUpResponse.dart';
-import 'package:linkify_app/features/auth/data/model/sign_up_model/SignUpResponseData.dart';
 import 'package:linkify_app/features/auth/data/repo/auth_repo.dart';
 
 class AuthRepoImpl extends AuthRepo {
@@ -15,7 +16,7 @@ class AuthRepoImpl extends AuthRepo {
   AuthRepoImpl({required this.apiManager});
 
   @override
-  Future<Either<SignUpResponseData, String>> signUp(
+  Future<Either<SignUpResponse, String>> signUp(
       {required SignUpInputModel input}) async {
     try {
       var response = await apiManager.postRequest(
@@ -24,9 +25,13 @@ class AuthRepoImpl extends AuthRepo {
         body: input.toJson(),
       );
       SignUpResponse signUpResponse = SignUpResponse.fromJson(response.data);
-      SignUpResponseData signUpResponseData =
-          signUpResponse.data ?? SignUpResponseData();
-      return Left(signUpResponseData);
+      if (response.statusCode == 400 ||
+          response.statusCode == 409 ||
+          response.statusCode == 404) {
+        return Right(signUpResponse.message ?? "");
+      }else{
+        return Left(signUpResponse);
+      }
     } catch (error) {
       return Right(error.toString());
     }
@@ -47,6 +52,29 @@ class AuthRepoImpl extends AuthRepo {
         return Right(confirmEmailResponse.message ?? "");
       } else {
         return Left(confirmEmailResponse);
+      }
+    } catch (error) {
+      return Right(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<LoginResponseModel, String>> login(
+      {required LoginInputModel input}) async {
+    try {
+      var response = await apiManager.postRequest(
+        baseUrl: Constants.baseUrl,
+        endPoints: EndPoints.login,
+        body: input.toJson(),
+      );
+      LoginResponseModel loginResponseModel =
+          LoginResponseModel.fromJson(response.data);
+      if (response.statusCode == 400 ||
+          response.statusCode == 404 ||
+          response.statusCode == 409) {
+        return Right(loginResponseModel.message ?? "");
+      } else {
+        return Left(loginResponseModel);
       }
     } catch (error) {
       return Right(error.toString());

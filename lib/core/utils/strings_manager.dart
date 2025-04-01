@@ -9,4 +9,6 @@ abstract class StringsManager {
   static const String onboarding3Title = "Fast & Secure Delivery";
   static const String onboarding3Description =
       "We handle the delivery process, ensuring your orders arrive quickly and safely";
+  static const String welcomeTextLogin = "Welcome Back To Linkify";
+  static const String welcomeTextTitleLogin = "Please sign in with your mail";
 }

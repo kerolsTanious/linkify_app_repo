@@ -18,4 +18,9 @@ abstract class Styles {
     fontSize: 18.sp,
     color: Colors.white,
   );
+  static TextStyle textStyle16 = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 16.sp,
+    color: Colors.white,
+  );
 }
