@@ -2,8 +2,8 @@ import 'package:go_router/go_router.dart';
 import 'package:linkify_app/features/auth/presentation/view/confirm_email.dart';
 import 'package:linkify_app/features/auth/presentation/view/forget_password.dart';
 import 'package:linkify_app/features/auth/presentation/view/login.dart';
+import 'package:linkify_app/features/auth/presentation/view/reset_password.dart';
 import 'package:linkify_app/features/auth/presentation/view/sign_up.dart';
-import 'package:linkify_app/features/auth/presentation/view/widgets/reset_password.dart';
 import 'package:linkify_app/features/home/presentation/view/home.dart';
 import 'package:linkify_app/features/on_boarding/presentation/view/onboarding.dart';
 import 'package:linkify_app/features/splash/presentation/view/splash.dart';
@@ -51,7 +51,12 @@ abstract class RoutesManager {
       ),
       GoRoute(
         path: kResetPassword,
-        builder: (context, state) => const ResetPassword(),
+        builder: (context, state) {
+          final String email = state.extra as String;
+          return ResetPassword(
+            email: email,
+          );
+        },
       ),
     ],
   );

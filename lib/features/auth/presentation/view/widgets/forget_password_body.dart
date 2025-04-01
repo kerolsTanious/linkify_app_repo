@@ -31,8 +31,8 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
 
   @override
   void dispose() {
-    super.dispose();
     emailController.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,7 +86,10 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                   textColor: Colors.white,
                   fontSize: 16.0,
                 );
-                context.go(RoutesManager.kResetPassword);
+                context.go(
+                  RoutesManager.kResetPassword,
+                  extra: emailController.text,
+                );
               }
               if (state is ForgetPasswordFailure) {
                 Fluttertoast.showToast(
@@ -108,9 +111,9 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                 );
               }
               return CustomAuthButton(
-                onTap: () async {
+                onTap: () {
                   if (formKey.currentState?.validate() ?? false) {
-                    await context
+                    context
                         .read<ForgetPasswordCubit>()
                         .forgetPassword(email: emailController.text);
                   }
