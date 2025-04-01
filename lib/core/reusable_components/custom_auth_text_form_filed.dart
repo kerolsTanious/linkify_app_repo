@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:linkify_app/core/utils/color_manager.dart';
 import 'package:linkify_app/core/utils/styles_manager.dart';
 
 class CustomAuthTextFormFiled extends StatelessWidget {
@@ -16,6 +17,11 @@ class CustomAuthTextFormFiled extends StatelessWidget {
     this.controller,
     this.readOnly = false,
     this.maxLength,
+    this.fillColor,
+    this.hintStyleColor,
+    this.prefixIconColor,
+    this.titleColor,
+    this.textStyle,
   });
 
   final String titleText;
@@ -29,6 +35,11 @@ class CustomAuthTextFormFiled extends StatelessWidget {
   final TextEditingController? controller;
   final bool readOnly;
   final int? maxLength;
+  final Color? fillColor;
+  final Color? hintStyleColor;
+  final Color? prefixIconColor;
+  final Color? titleColor;
+  final Color? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -38,22 +49,29 @@ class CustomAuthTextFormFiled extends StatelessWidget {
         Text(
           titleText,
           style: Styles.textStyle18.copyWith(
-            color: Colors.white,
+            color: titleColor == null
+                ? Colors.white
+                : const Color(0x00000000).withOpacity(0.7),
             fontWeight: FontWeight.w500,
           ),
         ),
         SizedBox(height: 20.h),
         TextFormField(
           decoration: InputDecoration(
-            fillColor: Colors.white,
+            fillColor:
+                fillColor == null ? Colors.white : ColorManager.mainColor,
             filled: true,
             hintText: hintText,
             hintStyle: Styles.textStyle18.copyWith(
               fontWeight: FontWeight.w300,
-              color: const Color(0x00000000).withOpacity(0.7),
+              color: hintStyleColor == null
+                  ? const Color(0x00000000).withOpacity(0.7)
+                  : Colors.white,
             ),
             prefixIcon: prefixIcon,
-            prefixIconColor: const Color(0x00000000).withOpacity(0.7),
+            prefixIconColor: prefixIconColor == null
+                ? const Color(0x00000000).withOpacity(0.7)
+                : Colors.white,
             suffixIcon: suffixIcon,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.r),
@@ -68,6 +86,11 @@ class CustomAuthTextFormFiled extends StatelessWidget {
             errorStyle: Styles.textStyle18.copyWith(
               color: Colors.red.shade900,
             ),
+          ),
+          style: Styles.textStyle18.copyWith(
+            color: textStyle == null
+                ? const Color(0xff000000).withOpacity(0.7)
+                : Colors.white,
           ),
           maxLength: maxLength,
           readOnly: readOnly,

@@ -50,8 +50,10 @@ class ConfirmEmailBody extends StatelessWidget {
               fillColor: ColorManager.mainColor,
               hintText: email,
               filled: true,
-              hintStyle: Styles.textStyle18
-                  .copyWith(fontWeight: FontWeight.w300, color: Colors.white),
+              hintStyle: Styles.textStyle18.copyWith(
+                fontWeight: FontWeight.w300,
+                color: Colors.white,
+              ),
               prefixIcon: const Icon(
                 Icons.email_outlined,
                 color: Colors.white,

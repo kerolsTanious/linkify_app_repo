@@ -3,6 +3,7 @@ import 'package:linkify_app/core/api/api_manager.dart';
 import 'package:linkify_app/core/api/end_points.dart';
 import 'package:linkify_app/core/constants.dart';
 import 'package:linkify_app/features/auth/data/model/ConfirmEmailResponseModel.dart';
+import 'package:linkify_app/features/auth/data/model/ForgetPasswordModelResponse.dart';
 import 'package:linkify_app/features/auth/data/model/confirm_email_input_model.dart';
 import 'package:linkify_app/features/auth/data/model/login_input_model.dart';
 import 'package:linkify_app/features/auth/data/model/login_model/LoginResponseModel.dart';
@@ -29,7 +30,7 @@ class AuthRepoImpl extends AuthRepo {
           response.statusCode == 409 ||
           response.statusCode == 404) {
         return Right(signUpResponse.message ?? "");
-      }else{
+      } else {
         return Left(signUpResponse);
       }
     } catch (error) {
@@ -48,7 +49,9 @@ class AuthRepoImpl extends AuthRepo {
       );
       ConfirmEmailResponse confirmEmailResponse =
           ConfirmEmailResponse.fromJson(response.data);
-      if (response.statusCode == 400) {
+      if (response.statusCode == 400 ||
+          response.statusCode == 404 ||
+          response.statusCode == 409) {
         return Right(confirmEmailResponse.message ?? "");
       } else {
         return Left(confirmEmailResponse);
@@ -78,6 +81,29 @@ class AuthRepoImpl extends AuthRepo {
       }
     } catch (error) {
       return Right(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<ForgetPasswordModelResponse, String>> forgetPassword(
+      {required String email}) async {
+    try {
+      var response = await apiManager.patchRequest(
+        baseUrl: Constants.baseUrl,
+        endPoint: EndPoints.forgetPassword,
+        body: {"email": email},
+      );
+      ForgetPasswordModelResponse forgetPasswordModelResponse =
+          ForgetPasswordModelResponse.fromJson(response.data);
+      if (response.statusCode == 400 ||
+          response.statusCode == 404 ||
+          response.statusCode == 409) {
+        return Right(forgetPasswordModelResponse.message ?? "");
+      } else {
+        return Left(forgetPasswordModelResponse);
+      }
+    } catch (e) {
+      return Right(e.toString());
     }
   }
 }

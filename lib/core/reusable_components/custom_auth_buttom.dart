@@ -8,10 +8,14 @@ class CustomAuthButton extends StatelessWidget {
     super.key,
     required this.buttonTitle,
     required this.onTap,
+    this.backgroundColor,
+    this.buttonTitleColor,
   });
 
   final String buttonTitle;
   final void Function() onTap;
+  final Color? backgroundColor;
+  final Color? buttonTitleColor;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,8 @@ class CustomAuthButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor:
+              backgroundColor == null ? Colors.white : ColorManager.mainColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.r),
           ),
@@ -29,7 +34,9 @@ class CustomAuthButton extends StatelessWidget {
         child: Text(
           buttonTitle,
           style: Styles.textStyle20.copyWith(
-            color: ColorManager.mainColor,
+            color: buttonTitleColor == null
+                ? ColorManager.mainColor
+                : Colors.white,
           ),
         ),
       ),

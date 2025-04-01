@@ -12,4 +12,6 @@ abstract class AssetsManager {
   static const String onboarding32 = "assets/images/onboarding 3 (2).svg";
   static const String onboarding33 = "assets/images/onboarding 3 (3).svg";
   static const String otpGif = "assets/images/OTP.gif";
+  static const String resetPasswordGif = "assets/images/reset_password.gif";
+  static const String forgetPasswordGif = "assets/images/forgot_password.gif";
 }

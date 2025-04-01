@@ -120,7 +120,9 @@ class _LoginBodyState extends State<LoginBody> {
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                context.push(RoutesManager.kForgetPassword);
+              },
               child: Text(
                 "Forgot password",
                 style: Styles.textStyle18.copyWith(
@@ -152,7 +154,6 @@ class _LoginBodyState extends State<LoginBody> {
                   textColor: Colors.white,
                   fontSize: 16.0,
                 );
-                print("error=============> ${state.error}");
               }
             },
             builder: (context, state) {
