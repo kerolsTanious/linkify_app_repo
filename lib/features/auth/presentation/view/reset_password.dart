@@ -8,10 +8,7 @@ import 'package:linkify_app/features/auth/presentation/view_model/reset_password
 class ResetPassword extends StatelessWidget {
   const ResetPassword({
     super.key,
-    required this.email,
   });
-
-  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +16,8 @@ class ResetPassword extends StatelessWidget {
       child: BlocProvider(
         create: (context) =>
             ResetPasswordCubit(authRepo: getIt.get<AuthRepoImpl>()),
-        child: Scaffold(
-          body: ResetPasswordBody(
-            email: email,
-          ),
+        child: const Scaffold(
+          body: ResetPasswordBody(),
         ),
       ),
     );

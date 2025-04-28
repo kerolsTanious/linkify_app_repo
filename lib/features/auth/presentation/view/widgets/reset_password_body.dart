@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkify_app/core/constants.dart';
+import 'package:linkify_app/core/prefs.dart';
 import 'package:linkify_app/core/reusable_components/custom_auth_buttom.dart';
 import 'package:linkify_app/core/reusable_components/custom_auth_text_form_filed.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
@@ -18,17 +19,14 @@ import 'package:linkify_app/features/auth/presentation/view_model/reset_password
 class ResetPasswordBody extends StatefulWidget {
   const ResetPasswordBody({
     super.key,
-    required this.email,
   });
-
-  final String email;
 
   @override
   State<ResetPasswordBody> createState() => _ResetPasswordBodyState();
 }
 
 class _ResetPasswordBodyState extends State<ResetPasswordBody> {
-  late TextEditingController emailController = TextEditingController();
+  late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController confirmPasswordController;
 
@@ -41,7 +39,9 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody> {
   @override
   void initState() {
     super.initState();
-    emailController.text = widget.email;
+    emailController = TextEditingController(
+      text: PrefsHelper.getString(key: PrefsKey.email),
+    );
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
   }

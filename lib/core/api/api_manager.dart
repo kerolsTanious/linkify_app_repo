@@ -44,4 +44,24 @@ class ApiManager {
     );
     return response;
   }
+
+  Future<Response> getRequest({
+    required String baseUrl,
+    required String endPoint,
+    Map<String, dynamic>? params,
+  }) async {
+    var response = await _dio.get(
+      "$baseUrl$endPoint",
+      queryParameters: params,
+      options: Options(
+        validateStatus: (status) {
+          if (status! < 500) {
+            return true;
+          }
+          return false;
+        },
+      ),
+    );
+    return response;
+  }
 }

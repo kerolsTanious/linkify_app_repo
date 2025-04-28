@@ -6,9 +6,7 @@ import 'package:linkify_app/features/auth/presentation/view/widgets/confirm_emai
 import 'package:linkify_app/features/auth/presentation/view_model/confirm_email_cubit/confirm_email_cubit.dart';
 
 class ConfirmEmail extends StatelessWidget {
-  const ConfirmEmail({super.key, required this.email});
-
-  final String email;
+  const ConfirmEmail({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +14,8 @@ class ConfirmEmail extends StatelessWidget {
       child: BlocProvider(
         create: (context) =>
             ConfirmEmailCubit(authRepo: getIt.get<AuthRepoImpl>()),
-        child: Scaffold(
-          body: ConfirmEmailBody(
-            email: email,
-          ),
+        child: const Scaffold(
+          body: ConfirmEmailBody(),
         ),
       ),
     );

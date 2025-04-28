@@ -4,6 +4,7 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkify_app/core/prefs.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
 import 'package:linkify_app/core/utils/color_manager.dart';
 import 'package:linkify_app/core/utils/routes.dart';
@@ -13,9 +14,9 @@ import 'package:linkify_app/features/auth/presentation/view_model/confirm_email_
 import 'package:linkify_app/features/auth/presentation/view_model/confirm_email_cubit/confirm_email_state.dart';
 
 class ConfirmEmailBody extends StatelessWidget {
-  const ConfirmEmailBody({super.key, required this.email});
+  const ConfirmEmailBody({super.key});
 
-  final String email;
+  static String email = PrefsHelper.getString(key: PrefsKey.email);
 
   @override
   Widget build(BuildContext context) {

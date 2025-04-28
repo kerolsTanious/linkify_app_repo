@@ -32,10 +32,7 @@ abstract class RoutesManager {
       ),
       GoRoute(
         path: kConfirmEmail,
-        builder: (context, state) {
-          final String email = state.extra as String;
-          return ConfirmEmail(email: email);
-        },
+        builder: (context, state) => const ConfirmEmail(),
       ),
       GoRoute(
         path: kLogin,
@@ -51,12 +48,7 @@ abstract class RoutesManager {
       ),
       GoRoute(
         path: kResetPassword,
-        builder: (context, state) {
-          final String email = state.extra as String;
-          return ResetPassword(
-            email: email,
-          );
-        },
+        builder: (context, state) => const ResetPassword(),
       ),
     ],
   );

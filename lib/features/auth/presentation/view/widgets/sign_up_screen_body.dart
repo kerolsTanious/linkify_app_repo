@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linkify_app/core/constants.dart';
+import 'package:linkify_app/core/prefs.dart';
 import 'package:linkify_app/core/reusable_components/custom_auth_buttom.dart';
 import 'package:linkify_app/core/reusable_components/custom_auth_text_form_filed.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
@@ -187,13 +188,15 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
                   textColor: Colors.white,
                   fontSize: 16.0,
                 );
+                PrefsHelper.setString(
+                    key: PrefsKey.email, value: emailController.text);
                 context.push(
                   RoutesManager.kConfirmEmail,
-                  extra: emailController.text,
                 );
               }
               if (state is SignUpFailure) {
-                print("error ===========================> ${state.errorMessage}");
+                print(
+                    "error ===========================> ${state.errorMessage}");
                 Fluttertoast.showToast(
                   msg: state.errorMessage,
                   toastLength: Toast.LENGTH_SHORT,
