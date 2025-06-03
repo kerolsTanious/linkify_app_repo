@@ -9,19 +9,20 @@ import 'AllCategoriesImages.dart';
 
 class AllCategoriesData {
   AllCategoriesData({
-      String? id, 
-      String? name, 
-      List<AllCategoriesImages>? image,
-      String? brandId, 
-      String? createdAt, 
-      num? v,}){
+    String? id,
+    String? name,
+    List<AllCategoriesImages>? image,
+    String? brandId,
+    String? createdAt,
+    num? v,
+  }) {
     _id = id;
     _name = name;
     _image = image;
     _brandId = brandId;
     _createdAt = createdAt;
     _v = v;
-}
+  }
 
   AllCategoriesData.fromJson(dynamic json) {
     _id = json['_id'];
@@ -36,6 +37,7 @@ class AllCategoriesData {
     _createdAt = json['createdAt'];
     _v = json['__v'];
   }
+
   String? _id;
   String? _name;
   List<AllCategoriesImages>? _image;
@@ -44,10 +46,15 @@ class AllCategoriesData {
   num? _v;
 
   String? get id => _id ?? "";
+
   String? get name => _name ?? "";
+
   List<AllCategoriesImages>? get image => _image ?? [];
+
   String? get brandId => _brandId ?? "";
+
   String? get createdAt => _createdAt ?? "";
+
   num? get v => _v ?? 0;
 
   Map<String, dynamic> toJson() {
@@ -62,5 +69,4 @@ class AllCategoriesData {
     map['__v'] = _v;
     return map;
   }
-
 }

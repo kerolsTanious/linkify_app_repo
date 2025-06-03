@@ -3,6 +3,7 @@ import 'package:linkify_app/features/auth/data/model/ConfirmEmailResponseModel.d
 import 'package:linkify_app/features/auth/data/model/ForgetPasswordModelResponse.dart';
 import 'package:linkify_app/features/auth/data/model/ResetPasswordResponseModel.dart';
 import 'package:linkify_app/features/auth/data/model/confirm_email_input_model.dart';
+import 'package:linkify_app/features/auth/data/model/create_new_customer_stripe/CreateNewCustomerStripeResponse.dart';
 import 'package:linkify_app/features/auth/data/model/login_input_model.dart';
 import 'package:linkify_app/features/auth/data/model/login_model/LoginResponseModel.dart';
 import 'package:linkify_app/features/auth/data/model/reset_password_input_model.dart';
@@ -24,4 +25,7 @@ abstract class AuthRepo {
 
   Future<Either<ResetPasswordResponseModel, String>> resetPassword(
       {required ResetPasswordInputModel input});
+
+  Future<Either<CreateNewCustomerStripeResponse, String>>
+      createNewCustomerStripe();
 }

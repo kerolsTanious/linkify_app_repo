@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:linkify_app/core/api/api_keys.dart';
 import 'package:linkify_app/core/api/api_manager.dart';
 import 'package:linkify_app/core/api/end_points.dart';
 import 'package:linkify_app/core/constants.dart';
@@ -6,6 +7,7 @@ import 'package:linkify_app/features/auth/data/model/ConfirmEmailResponseModel.d
 import 'package:linkify_app/features/auth/data/model/ForgetPasswordModelResponse.dart';
 import 'package:linkify_app/features/auth/data/model/ResetPasswordResponseModel.dart';
 import 'package:linkify_app/features/auth/data/model/confirm_email_input_model.dart';
+import 'package:linkify_app/features/auth/data/model/create_new_customer_stripe/CreateNewCustomerStripeResponse.dart';
 import 'package:linkify_app/features/auth/data/model/login_input_model.dart';
 import 'package:linkify_app/features/auth/data/model/login_model/LoginResponseModel.dart';
 import 'package:linkify_app/features/auth/data/model/reset_password_input_model.dart';
@@ -129,6 +131,25 @@ class AuthRepoImpl extends AuthRepo {
       }
     } catch (error) {
       return Right(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<CreateNewCustomerStripeResponse, String>>
+      createNewCustomerStripe() async {
+    try {
+      var response = await apiManager.postRequest(
+        baseUrl: Constants.stripeBaseUrl,
+        endPoints: EndPoints.createNewCustomer,
+        headers: {
+          'Authorization': 'Bearer ${ApiKeys.secretStripeKey}',
+        },
+      );
+      CreateNewCustomerStripeResponse createNewCustomerStripeResponse =
+          CreateNewCustomerStripeResponse.fromJson(response.data);
+      return Left(createNewCustomerStripeResponse);
+    } catch (e) {
+      return Right(e.toString());
     }
   }
 }

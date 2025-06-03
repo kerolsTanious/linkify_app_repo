@@ -23,4 +23,19 @@ abstract class Styles {
     fontSize: 16.sp,
     color: Colors.white,
   );
+  static TextStyle textStyle14 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14.sp,
+    color: ColorManager.texColor,
+  );
+  static TextStyle textStyle11 = TextStyle(
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w400,
+    color: ColorManager.mainColor.withOpacity(0.6),
+  );
+  static TextStyle textStyle25 = TextStyle(
+    fontSize: 25.sp,
+    fontWeight: FontWeight.w500,
+    color: ColorManager.texColor,
+  );
 }

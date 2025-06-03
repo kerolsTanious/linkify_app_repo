@@ -3,5 +3,6 @@ abstract class Constants {
   static RegExp emailRegex = RegExp(r"^[a-zA-Z0-9._%+-]+@gmail\.com$");
   static RegExp passwordRegex = RegExp(
       r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$');
-  static const String baseUrl = "http://192.168.1.10:3000/";
+  static const String baseUrl = "http://192.168.100.5:3000/";
+  static const String stripeBaseUrl = "https://api.stripe.com/v1/";
 }

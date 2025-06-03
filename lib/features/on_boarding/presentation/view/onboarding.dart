@@ -20,8 +20,10 @@ class _OnboardingState extends State<Onboarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: OnboardingScreenBody(
-        pageController: pageController,
+      body: SafeArea(
+        child: OnboardingScreenBody(
+          pageController: pageController,
+        ),
       ),
     );
   }

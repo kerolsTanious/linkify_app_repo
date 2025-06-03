@@ -11,6 +11,7 @@ import 'package:linkify_app/core/utils/assets_manager.dart';
 import 'package:linkify_app/core/utils/routes.dart';
 import 'package:linkify_app/core/utils/styles_manager.dart';
 import 'package:linkify_app/features/auth/data/model/sign_up_input_model.dart';
+import 'package:linkify_app/features/auth/presentation/view_model/create_new_customer_cubit/create_new_customer_cubit.dart';
 import 'package:linkify_app/features/auth/presentation/view_model/sign_up_cubit/sign_up_cubit.dart';
 import 'package:linkify_app/features/auth/presentation/view_model/sign_up_cubit/sign_up_state.dart';
 
@@ -189,14 +190,27 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
                   fontSize: 16.0,
                 );
                 PrefsHelper.setString(
-                    key: PrefsKey.email, value: emailController.text);
+                  key: PrefsKey.email,
+                  value: emailController.text,
+                );
+                PrefsHelper.setString(
+                  key: PrefsKey.phone,
+                  value: phoneController.text,
+                );
+                PrefsHelper.setString(
+                  key: PrefsKey.password,
+                  value: passwordController.text,
+                );
+                PrefsHelper.setString(
+                  key: PrefsKey.name,
+                  value: nameController.text,
+                );
                 context.push(
                   RoutesManager.kConfirmEmail,
                 );
               }
               if (state is SignUpFailure) {
-                print(
-                    "error ===========================> ${state.errorMessage}");
+                print("error ====> ${state.errorMessage}");
                 Fluttertoast.showToast(
                   msg: state.errorMessage,
                   toastLength: Toast.LENGTH_SHORT,

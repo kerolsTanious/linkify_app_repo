@@ -14,4 +14,24 @@ abstract class AssetsManager {
   static const String otpGif = "assets/images/OTP.gif";
   static const String resetPasswordGif = "assets/images/reset_password.gif";
   static const String forgetPasswordGif = "assets/images/forgot_password.gif";
+  static const String selectedProfile =
+      "assets/images/unselected_profile_icon.svg";
+  static const String unSelectedProfile =
+      "assets/images/selected_profile_icon.svg";
+  static const String selectedHome = "assets/images/unslected_home_icon.svg";
+  static const String unSelectedHome = "assets/images/selected_home_icon.svg";
+  static const String selectedCategory =
+      "assets/images/unslected_category_icon.svg";
+  static const String unSelectedCategory =
+      "assets/images/selected_category_icon.svg";
+  static const String ad1 = "assets/images/ad1.png";
+  static const String ad2 = "assets/images/ad2.png";
+  static const String ad3 = "assets/images/ad3.png";
+  static const String plusIcon = "assets/images/plus_icon.svg";
+  static const String deleteIcon = "assets/images/delete_icon.svg";
+  static const String addToCart = "assets/images/add_To_Cart.gif";
+  static const String address = "assets/images/output-onlinepngtools.png";
+  static const String address2 = "assets/images/output-onlinepngtools2.png";
+  static const String address3 = "assets/images/output-onlinepngtools3.png";
+  static const String masterCardLogo = "assets/images/master_card_logo.svg";
 }

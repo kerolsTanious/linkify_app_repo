@@ -1,0 +1,2 @@
+D:/flutter_test/linkify_app/android/app/.cxx/RelWithDebInfo/s206w585/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/flutter_test/linkify_app/android/app/.cxx/RelWithDebInfo/s206w585/arm64-v8a/CMakeFiles/rebuild_cache.dir

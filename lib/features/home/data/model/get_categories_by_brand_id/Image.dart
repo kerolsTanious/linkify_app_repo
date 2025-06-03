@@ -1,0 +1,39 @@
+/// secure_url : "https://res.cloudinary.com/dvufwchax/image/upload/v1745511184/LinkifyApp/brand/image/undefined/i7pocecntfgjrvst2qir.jpg"
+/// public_id : "LinkifyApp/brand/image/undefined/i7pocecntfgjrvst2qir"
+/// _id : "680a630f9a4299c023d2cd80"
+
+class Image {
+  Image({
+    String? secureUrl,
+    String? publicId,
+    String? id,
+  }) {
+    _secureUrl = secureUrl;
+    _publicId = publicId;
+    _id = id;
+  }
+
+  Image.fromJson(dynamic json) {
+    _secureUrl = json['secure_url'];
+    _publicId = json['public_id'];
+    _id = json['_id'];
+  }
+
+  String? _secureUrl;
+  String? _publicId;
+  String? _id;
+
+  String? get secureUrl => _secureUrl ?? '';
+
+  String? get publicId => _publicId ?? "";
+
+  String? get id => _id ?? "";
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['secure_url'] = _secureUrl;
+    map['public_id'] = _publicId;
+    map['_id'] = _id;
+    return map;
+  }
+}
