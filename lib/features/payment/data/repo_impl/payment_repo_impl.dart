@@ -21,13 +21,14 @@ class PaymentRepoImpl extends PaymentRepo {
   PaymentRepoImpl({required this.stripeManager, required this.apiManager});
 
   @override
-  Future<Either<SaveAddressResponse, String>> saveAddress(
-      {required String token,
-      required String name,
-      required String phone,
-      required String street,
-      required String location,
-      String? notes}) async {
+  Future<Either<SaveAddressResponse, String>> saveAddress({
+    required String token,
+    required String name,
+    required String phone,
+    required String street,
+    required String location,
+    String? notes,
+  }) async {
     try {
       var response = await apiManager.postRequest(
           baseUrl: Constants.baseUrl,

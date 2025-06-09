@@ -19,6 +19,10 @@ class TotalPriceCartContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double totalPriceBeforeDiscount = double.parse(totalPrice) * 12;
+    final double discount = totalPriceBeforeDiscount * 0.005;
+    final double totalPriceAfterDiscount = totalPriceBeforeDiscount - discount;
+
     return Container(
       width: double.infinity,
       height: 100.h,
@@ -49,7 +53,33 @@ class TotalPriceCartContainer extends StatelessWidget {
                 ),
                 SizedBox(height: 12.h),
                 Text(
-                  " ج.م $totalPrice",
+                  " ج.م ${totalPriceAfterDiscount.toStringAsFixed(2)}",
+                  style: Styles.textStyle18.copyWith(
+                    color: Colors.white,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: REdgeInsets.only(
+              top: 20,
+              right: 16,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "خصم",
+                  style: Styles.textStyle18.copyWith(
+                    color: Colors.white70,
+                  ),
+                ),
+                SizedBox(height: 12.h),
+                Text(
+                  " ج.م ${discount.toStringAsFixed(2)}",
                   style: Styles.textStyle18.copyWith(
                     color: Colors.white,
                   ),
@@ -68,7 +98,7 @@ class TotalPriceCartContainer extends StatelessWidget {
                 );
                 PrefsHelper.setString(
                   key: PrefsKey.totalAmount,
-                  value: totalPrice,
+                  value: totalPriceAfterDiscount.toStringAsFixed(2),
                 );
               },
               child: Container(

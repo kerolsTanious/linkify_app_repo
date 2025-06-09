@@ -117,6 +117,7 @@ class _AddressBodyState extends State<AddressBody> {
                         title: Text(locations[index]),
                         onTap: () {
                           Navigator.pop(context, locations[index]);
+                          print("locationnnnnnnnn ${locations[index]}");
                         },
                       );
                     },

@@ -9,6 +9,7 @@ enum PrefsKey {
   customerId,
   totalAmount,
   orderId,
+  role,
 }
 
 class PrefsHelper {

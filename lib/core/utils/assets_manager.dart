@@ -34,4 +34,10 @@ abstract class AssetsManager {
   static const String address2 = "assets/images/output-onlinepngtools2.png";
   static const String address3 = "assets/images/output-onlinepngtools3.png";
   static const String masterCardLogo = "assets/images/master_card_logo.svg";
+  static const String company1 = "assets/images/company1.png";
+  static const String company2 = "assets/images/company2.png";
+  static const String merchant = "assets/images/merchant.png";
+  static const String report = "assets/images/In no time.gif";
+  static const String report2 = "assets/images/In no time (1).gif";
+  static const String report3 = "assets/images/In no time (2).gif";
 }

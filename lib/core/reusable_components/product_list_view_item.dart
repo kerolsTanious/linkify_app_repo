@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:linkify_app/core/prefs.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
@@ -25,6 +25,8 @@ class ProductListViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double itemPrice =
+        double.parse((productData.price ?? "").split(" ")[0]) * 12;
     return InkWell(
       onTap: () {},
       splashColor: Colors.transparent,
@@ -147,8 +149,10 @@ class ProductListViewItem extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      productData.price ?? '',
-                      style: Styles.textStyle14,
+                      "${itemPrice.toStringAsFixed(2)} ج.م ",
+                      style: Styles.textStyle14.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                     Expanded(child: SizedBox()),
                     BlocConsumer<AddToCartCubit, AddToCartState>(

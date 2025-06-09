@@ -8,6 +8,7 @@ import 'package:linkify_app/core/prefs.dart';
 import 'package:linkify_app/core/reusable_components/custom_auth_buttom.dart';
 import 'package:linkify_app/core/reusable_components/custom_auth_text_form_filed.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
+import 'package:linkify_app/core/utils/color_manager.dart';
 import 'package:linkify_app/core/utils/routes.dart';
 import 'package:linkify_app/core/utils/strings_manager.dart';
 import 'package:linkify_app/core/utils/styles_manager.dart';
@@ -46,175 +47,273 @@ class _LoginBodyState extends State<LoginBody> {
 
   bool obscureText = true;
 
+  String selectedRole = "";
+
   @override
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      child: BlocListener<CreateNewCustomerCubit, CreateNewCustomerState>(
-        listener: (context, state) {
-          if (state is CreateNewCustomerSuccess) {
-            PrefsHelper.setString(
-                key: PrefsKey.customerId,
-                value: state.createNewCustomerStripeResponse.id ?? "");
-          }
-          if (state is CreateNewCustomerFailure) {
-            print("Error create newCuromer    ${state.error}");
-          }
-        },
-        child: ListView(
-          padding: REdgeInsets.symmetric(
-            horizontal: 25,
-            vertical: 30,
-          ),
-          children: [
-            Center(
-              child: Image.asset(
-                width: 230.w,
-                height: 70.h,
-                AssetsManager.linkifyLogoTrans,
-              ),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: BlocListener<CreateNewCustomerCubit, CreateNewCustomerState>(
+          listener: (context, state) {
+            if (state is CreateNewCustomerSuccess) {
+              PrefsHelper.setString(
+                  key: PrefsKey.customerId,
+                  value: state.createNewCustomerStripeResponse.id ?? "");
+            }
+            if (state is CreateNewCustomerFailure) {
+              print("Error create newCuromer    ${state.error}");
+            }
+          },
+          child: ListView(
+            padding: REdgeInsets.symmetric(
+              horizontal: 25,
+              vertical: 30,
             ),
-            SizedBox(height: 45.h),
-            Text(
-              StringsManager.welcomeTextLogin,
-              style: Styles.textStyle24.copyWith(
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 8.h),
-            Text(
-              StringsManager.welcomeTextTitleLogin,
-              style: Styles.textStyle16,
-            ),
-            SizedBox(height: 40.h),
-            CustomAuthTextFormFiled(
-              titleText: "E-mail address",
-              hintText: "enter your email address",
-              prefixIcon: const Icon(Icons.email_outlined),
-              textInputType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
-              controller: emailController,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Please enter your email address";
-                } else if (!(Constants.emailRegex).hasMatch(value)) {
-                  return "Please enter a valid email address";
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 30.h),
-            CustomAuthTextFormFiled(
-              titleText: "Password",
-              hintText: "enter your password",
-              prefixIcon: const Icon(Icons.lock_outlined),
-              textInputType: TextInputType.visiblePassword,
-              textInputAction: TextInputAction.done,
-              controller: passwordController,
-              suffixIcon: IconButton(
-                onPressed: () {
-                  obscureText = !obscureText;
-                  setState(() {});
-                },
-                icon: obscureText
-                    ? const Icon(Icons.visibility_off_outlined)
-                    : const Icon(Icons.visibility_outlined),
-              ),
-              obscureText: obscureText,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Please enter your password.";
-                } else if (!(Constants.passwordRegex).hasMatch(value)) {
-                  return "Password must be at least 8 characters long, include an uppercase letter, a number, and a special character";
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 15.h),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  context.push(RoutesManager.kForgetPassword);
-                },
-                child: Text(
-                  "Forgot password",
-                  style: Styles.textStyle18.copyWith(
-                    fontWeight: FontWeight.w400,
-                  ),
+            children: [
+              Center(
+                child: Image.asset(
+                  width: 230.w,
+                  height: 70.h,
+                  AssetsManager.linkifyLogoTrans,
                 ),
               ),
-            ),
-            SizedBox(height: 50.h),
-            BlocConsumer<LoginCubit, LoginState>(
-              listener: (context, state) {
-                if (state is LoginSuccess) {
-                  BlocProvider.of<CreateNewCustomerCubit>(context)
-                      .createNewCustomer();
-                  PrefsHelper.setToken(
-                      key: PrefsKey.token,
-                      token: state.loginResponseModel.data?.accessToken ?? '');
-                  Fluttertoast.showToast(
-                    msg: "Login successful",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    backgroundColor: Colors.green,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                  context.go(RoutesManager.kHome);
-                }
-                if (state is LoginFailure) {
-                  Fluttertoast.showToast(
-                    msg: state.error,
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-              },
-              builder: (context, state) {
-                if (state is LoginLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  );
-                }
-                return CustomAuthButton(
-                  buttonTitle: "Sign up",
-                  onTap: () async {
-                    if (formKey.currentState?.validate() ?? false) {
-                      await context.read<LoginCubit>().login(
-                            input: LoginInputModel(
-                              email: emailController.text,
-                              password: passwordController.text,
-                            ),
-                          );
-                    }
-                  },
-                );
-              },
-            ),
-            SizedBox(height: 30.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Don’t have an account?", style: Styles.textStyle18),
-                TextButton(
+              SizedBox(height: 45.h),
+              Text(
+                StringsManager.welcomeTextLogin,
+                style: Styles.textStyle24.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                StringsManager.welcomeTextTitleLogin,
+                style: Styles.textStyle16,
+              ),
+              SizedBox(height: 40.h),
+              CustomAuthTextFormFiled(
+                titleText: "عنوان البريد الإلكتروني",
+                hintText: "أدخل عنوان بريدك الإلكتروني",
+                prefixIcon: const Icon(Icons.email_outlined),
+                textInputType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                controller: emailController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "يرجى إدخال عنوان البريد الإلكتروني";
+                  } else if (!(Constants.emailRegex).hasMatch(value)) {
+                    return "يرجى إدخال عنوان بريد إلكتروني صالح";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 30.h),
+              CustomAuthTextFormFiled(
+                titleText: "كلمة المرور",
+                hintText: "أدخل كلمة المرور",
+                prefixIcon: const Icon(Icons.lock_outlined),
+                textInputType: TextInputType.visiblePassword,
+                textInputAction: TextInputAction.done,
+                controller: passwordController,
+                suffixIcon: IconButton(
                   onPressed: () {
-                    context.push(RoutesManager.kSignUp);
+                    obscureText = !obscureText;
+                    setState(() {});
+                  },
+                  icon: obscureText
+                      ? const Icon(Icons.visibility_off_outlined)
+                      : const Icon(Icons.visibility_outlined),
+                ),
+                obscureText: obscureText,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "يرجى إدخال كلمة المرور.";
+                  } else if (!(Constants.passwordRegex).hasMatch(value)) {
+                    return "يجب أن تكون كلمة المرور 8 أحرف على الأقل، تحتوي على حرف كبير، رقم، ورمز خاص";
+                  }
+                  return null;
+                },
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    context.push(RoutesManager.kForgetPassword);
                   },
                   child: Text(
-                    "Create Account",
-                    style: Styles.textStyle18,
+                    "نسيت كلمة المرور",
+                    style: Styles.textStyle18.copyWith(
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              SizedBox(height: 15.h),
+              Text(
+                "من فضلك اختر نوع المستخدم الذي سيستعمل التطبيق",
+                textAlign: TextAlign.center,
+                style: Styles.textStyle18.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 15.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () {
+                      selectedRole = "admin";
+                      PrefsHelper.setString(key: PrefsKey.role, value: "admin");
+                      setState(() {});
+                    },
+                    child: Container(
+                      width: 100.w,
+                      height: 120.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                        color: Colors.white,
+                        border: selectedRole == "admin"
+                            ? Border.all(color: Colors.green, width: 3.w)
+                            : null,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            width: 80.w,
+                            AssetsManager.company2,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "شركة",
+                            style: Styles.textStyle16.copyWith(
+                              color: ColorManager.texColor,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () {
+                      selectedRole = "user";
+                      PrefsHelper.setString(key: PrefsKey.role, value: "user");
+                      setState(() {});
+                    },
+                    child: Container(
+                      width: 100.w,
+                      height: 120.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                        color: Colors.white,
+                        border: selectedRole == "user"
+                            ? Border.all(color: Colors.green, width: 3.w)
+                            : null,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            width: 80.w,
+                            AssetsManager.merchant,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "تاجر",
+                            style: Styles.textStyle16.copyWith(
+                              color: ColorManager.texColor,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 50.h),
+              BlocConsumer<LoginCubit, LoginState>(
+                listener: (context, state) {
+                  if (state is LoginSuccess) {
+                    BlocProvider.of<CreateNewCustomerCubit>(context)
+                        .createNewCustomer();
+                    PrefsHelper.setToken(
+                        key: PrefsKey.token,
+                        token:
+                            state.loginResponseModel.data?.accessToken ?? '');
+                    Fluttertoast.showToast(
+                      msg: "تم تسجيل الدخول بنجاح",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: Colors.green,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                    PrefsHelper.getString(key: PrefsKey.role) == "admin"
+                        ? context.go(RoutesManager.kAdmin)
+                        : context.go(RoutesManager.kHome);
+                  }
+                  if (state is LoginFailure) {
+                    Fluttertoast.showToast(
+                      msg: state.error,
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  if (state is LoginLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    );
+                  }
+                  return CustomAuthButton(
+                    buttonTitle: "تسجيل الدخول",
+                    onTap: () async {
+                      if (formKey.currentState?.validate() ?? false) {
+                        await context.read<LoginCubit>().login(
+                              input: LoginInputModel(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              ),
+                            );
+                      }
+                    },
+                  );
+                },
+              ),
+              SizedBox(height: 30.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("ليس لديك حساب؟", style: Styles.textStyle18),
+                  TextButton(
+                    onPressed: () {
+                      context.push(RoutesManager.kSignUp);
+                    },
+                    child: Text(
+                      "إنشاء حساب",
+                      style: Styles.textStyle18,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

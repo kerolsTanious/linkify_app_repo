@@ -31,7 +31,7 @@ class _OnboardingScreenBodyState extends State<OnboardingScreenBody> {
         right: 16,
         left: 16,
         bottom: 16,
-        top: 40,
+        top: 20,
       ),
       child: Column(
         children: [
@@ -46,7 +46,7 @@ class _OnboardingScreenBodyState extends State<OnboardingScreenBody> {
                     backgroundColor: Colors.grey[200],
                   ),
                   child: Text(
-                    "Skip",
+                    "تخطي",
                     style: Styles.textStyle20
                         .copyWith(color: ColorManager.texColor),
                   ),
@@ -69,7 +69,7 @@ class _OnboardingScreenBodyState extends State<OnboardingScreenBody> {
                     backgroundColor: ColorManager.mainColor,
                   ),
                   child: Text(
-                    "Next",
+                    "التالي",
                     style: Styles.textStyle20,
                   ),
                 ),
@@ -104,7 +104,7 @@ class _OnboardingScreenBodyState extends State<OnboardingScreenBody> {
           ),
           SmoothPageIndicator(
             controller: widget.pageController,
-            count: 3, // Number of pages
+            count: 3,
             effect: const ExpandingDotsEffect(
               activeDotColor: Colors.blue,
               dotColor: Colors.grey,

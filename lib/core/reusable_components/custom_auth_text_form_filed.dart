@@ -99,6 +99,7 @@ class CustomAuthTextFormFiled extends StatelessWidget {
           obscureText: obscureText ?? false,
           validator: validator,
           controller: controller,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ],
     );

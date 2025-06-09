@@ -27,7 +27,7 @@ class ConfirmEmailBody extends StatelessWidget {
         }
         if (state is ConfirmEmailFailure) {
           Fluttertoast.showToast(
-              msg: "Invalid OTP! Please check your email and try again",
+              msg: "رمز التحقق غير صالح! يرجى التحقق من بريدك الإلكتروني والمحاولة مرة أخرى",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.red,
@@ -35,69 +35,72 @@ class ConfirmEmailBody extends StatelessWidget {
               fontSize: 16.0);
         }
       },
-      child: ListView(
-        padding: REdgeInsets.symmetric(
-          horizontal: 25,
-          vertical: 25,
-        ),
-        children: [
-          Image.asset(
-            width: double.infinity,
-            AssetsManager.otpGif,
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: ListView(
+          padding: REdgeInsets.symmetric(
+            horizontal: 25,
+            vertical: 25,
           ),
-          SizedBox(height: 50.h),
-          TextFormField(
-            decoration: InputDecoration(
-              fillColor: ColorManager.mainColor,
-              hintText: email,
-              filled: true,
-              hintStyle: Styles.textStyle18.copyWith(
-                fontWeight: FontWeight.w300,
-                color: Colors.white,
-              ),
-              prefixIcon: const Icon(
-                Icons.email_outlined,
-                color: Colors.white,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.r),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  width: 1.5.w,
-                  color: Colors.red.shade700,
+          children: [
+            Image.asset(
+              width: double.infinity,
+              AssetsManager.otpGif,
+            ),
+            SizedBox(height: 50.h),
+            TextFormField(
+              decoration: InputDecoration(
+                fillColor: ColorManager.mainColor,
+                hintText: email,
+                filled: true,
+                hintStyle: Styles.textStyle18.copyWith(
+                  fontWeight: FontWeight.w300,
+                  color: Colors.white,
                 ),
-                borderRadius: BorderRadius.circular(15.r),
+                prefixIcon: const Icon(
+                  Icons.email_outlined,
+                  color: Colors.white,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.r),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 1.5.w,
+                    color: Colors.red.shade700,
+                  ),
+                  borderRadius: BorderRadius.circular(15.r),
+                ),
+                errorStyle: Styles.textStyle18.copyWith(
+                  color: Colors.red.shade900,
+                ),
               ),
-              errorStyle: Styles.textStyle18.copyWith(
-                color: Colors.red.shade900,
-              ),
+              readOnly: true,
             ),
-            readOnly: true,
-          ),
-          SizedBox(height: 50.h),
-          OtpTextField(
-            numberOfFields: 4,
-            showFieldAsBox: true,
-            filled: true,
-            fillColor: ColorManager.mainColor,
-            styles: List.generate(
-              4,
-              (index) => TextStyle(
-                color: Colors.white,
-                fontSize: 25.sp,
+            SizedBox(height: 50.h),
+            OtpTextField(
+              numberOfFields: 4,
+              showFieldAsBox: true,
+              filled: true,
+              fillColor: ColorManager.mainColor,
+              styles: List.generate(
+                4,
+                (index) => TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.sp,
+                ),
               ),
+              onSubmit: (String verificationCode) async {
+                await context.read<ConfirmEmailCubit>().confirmEmail(
+                      input: ConfirmEmailInputModel(
+                        email: email,
+                        otp: verificationCode,
+                      ),
+                    );
+              },
             ),
-            onSubmit: (String verificationCode) async {
-              await context.read<ConfirmEmailCubit>().confirmEmail(
-                    input: ConfirmEmailInputModel(
-                      email: email,
-                      otp: verificationCode,
-                    ),
-                  );
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

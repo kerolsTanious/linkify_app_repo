@@ -24,7 +24,12 @@ class CartScreenListViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> priceList = getCartItemData.price!.split(" ");
+    double price =
+        (double.tryParse((getCartItemData.price ?? "").split(" ").first) ??
+                0.0) *
+            12;
+
+    String price2 = price.toStringAsFixed(2);
     return Padding(
       padding: REdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Container(
@@ -209,7 +214,7 @@ class CartScreenListViewItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            " ج.م ${(getCartItemData.quantity ?? 0) * (int.parse(priceList[0]))}",
+                            " ج.م ${((getCartItemData.quantity ?? 0) * price).toStringAsFixed(2)}",
                             style: Styles.textStyle18
                                 .copyWith(color: ColorManager.texColor),
                             maxLines: 1,
@@ -242,6 +247,11 @@ class CartScreenListViewItem extends StatelessWidget {
                                   color: Colors.white,
                                   Icons.add_circle_outline,
                                 ),
+                              ),
+                              Icon(
+                                Icons.inventory_2_outlined,
+                                color: Colors.white,
+                                size: 20.sp,
                               ),
                               Text(
                                 getCartItemData.quantity.toString(),

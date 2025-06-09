@@ -130,6 +130,7 @@ class _CartScreenBodyState extends State<CartScreenBody> {
             );
           }
         } else if (state is GetCartFailure) {
+          print("error ==========> ${state.errorMessage}");
           return FailureStateWidget(errorMessage: state.errorMessage);
         } else if (state is UpdateItemCartSuccess) {
           return Column(

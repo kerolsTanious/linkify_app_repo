@@ -36,4 +36,20 @@ abstract class EndPoints {
   static String getOrderDetails({required String orderId}) {
     return "order/$orderId";
   }
+
+  static const String adminAddProducts = "admin/products";
+
+  static String adminDeleteProduct({
+    required String productId,
+  }) {
+    return "admin/products/$productId";
+  }
+
+  static String adminUpdateProduct({
+    required String productId,
+  }) {
+    return "admin/products/$productId";
+  }
+
+  static String adminGetReport = "admin/report-pdf";
 }

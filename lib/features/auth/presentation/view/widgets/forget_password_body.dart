@@ -40,95 +40,98 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      child: ListView(
-        padding: REdgeInsets.symmetric(
-          horizontal: 25,
-          vertical: 25,
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: ListView(
+          padding: REdgeInsets.symmetric(
+            horizontal: 25,
+            vertical: 25,
+          ),
+          children: [
+            Image.asset(
+              AssetsManager.forgetPasswordGif,
+              width: double.infinity,
+              height: 377.h,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(height: 100.h),
+            CustomAuthTextFormFiled(
+              titleText: "عنوان البريد الإلكتروني",
+              hintText: "أدخل عنوان بريدك الإلكتروني",
+              prefixIcon: const Icon(Icons.email_outlined),
+              textInputType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.done,
+              controller: emailController,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "يرجى إدخال عنوان البريد الإلكتروني";
+                } else if (!(Constants.emailRegex).hasMatch(value)) {
+                  return "يرجى إدخال عنوان بريد إلكتروني صالح";
+                }
+                return null;
+              },
+              fillColor: ColorManager.mainColor,
+              hintStyleColor: Colors.white,
+              prefixIconColor: Colors.white,
+              titleColor: const Color(0x00000000).withOpacity(0.7),
+              textStyle: Colors.white,
+            ),
+            SizedBox(height: 50.h),
+            BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
+              listener: (context, state) {
+                if (state is ForgetPasswordSuccess) {
+                  Fluttertoast.showToast(
+                    msg:
+                        "تم إرسال رمز التحقق إلى بريدك الإلكتروني. يرجى التحقق من صندوق الوارد (وأيضًا مجلد الرسائل غير المرغوب فيها)",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                  PrefsHelper.setString(
+                    key: PrefsKey.email,
+                    value: emailController.text,
+                  );
+                  context.go(
+                    RoutesManager.kResetPassword,
+                  );
+                }
+                if (state is ForgetPasswordFailure) {
+                  Fluttertoast.showToast(
+                    msg: state.error,
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state is ForgetPasswordLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: ColorManager.mainColor,
+                    ),
+                  );
+                }
+                return CustomAuthButton(
+                  onTap: () {
+                    if (formKey.currentState?.validate() ?? false) {
+                      context
+                          .read<ForgetPasswordCubit>()
+                          .forgetPassword(email: emailController.text);
+                    }
+                  },
+                  buttonTitle: "إرسال",
+                  backgroundColor: ColorManager.mainColor,
+                  buttonTitleColor: Colors.white,
+                );
+              },
+            ),
+          ],
         ),
-        children: [
-          Image.asset(
-            AssetsManager.forgetPasswordGif,
-            width: double.infinity,
-            height: 377.h,
-            fit: BoxFit.contain,
-          ),
-          SizedBox(height: 100.h),
-          CustomAuthTextFormFiled(
-            titleText: "E-mail address",
-            hintText: "enter your email address",
-            prefixIcon: const Icon(Icons.email_outlined),
-            textInputType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.done,
-            controller: emailController,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "Please enter your email address";
-              } else if (!(Constants.emailRegex).hasMatch(value)) {
-                return "Please enter a valid email address";
-              }
-              return null;
-            },
-            fillColor: ColorManager.mainColor,
-            hintStyleColor: Colors.white,
-            prefixIconColor: Colors.white,
-            titleColor: const Color(0x00000000).withOpacity(0.7),
-            textStyle: Colors.white,
-          ),
-          SizedBox(height: 50.h),
-          BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
-            listener: (context, state) {
-              if (state is ForgetPasswordSuccess) {
-                Fluttertoast.showToast(
-                  msg:
-                      "A verification code has been sent to your email. Please check your inbox (and spam folder)",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
-                  fontSize: 16.0,
-                );
-                PrefsHelper.setString(
-                  key: PrefsKey.email,
-                  value: emailController.text,
-                );
-                context.go(
-                  RoutesManager.kResetPassword,
-                );
-              }
-              if (state is ForgetPasswordFailure) {
-                Fluttertoast.showToast(
-                  msg: state.error,
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0,
-                );
-              }
-            },
-            builder: (context, state) {
-              if (state is ForgetPasswordLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: ColorManager.mainColor,
-                  ),
-                );
-              }
-              return CustomAuthButton(
-                onTap: () {
-                  if (formKey.currentState?.validate() ?? false) {
-                    context
-                        .read<ForgetPasswordCubit>()
-                        .forgetPassword(email: emailController.text);
-                  }
-                },
-                buttonTitle: "Submit",
-                backgroundColor: ColorManager.mainColor,
-                buttonTitleColor: Colors.white,
-              );
-            },
-          ),
-        ],
       ),
     );
   }

@@ -4,6 +4,7 @@ class SignUpInputModel {
   final String password;
   final String confirmPassword;
   final String phone;
+  final String role;
 
   SignUpInputModel(
     this.email,
@@ -11,6 +12,7 @@ class SignUpInputModel {
     this.password,
     this.confirmPassword,
     this.phone,
+    this.role,
   );
 
   Map<String, dynamic> toJson() {
@@ -20,6 +22,7 @@ class SignUpInputModel {
       "phone": phone,
       "username": name,
       "confirmationPassword": confirmPassword,
+      "role": role
     };
   }
 }

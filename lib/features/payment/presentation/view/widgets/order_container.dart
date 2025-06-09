@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:linkify_app/core/prefs.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
 import 'package:linkify_app/core/utils/color_manager.dart';
 import 'package:linkify_app/core/utils/styles_manager.dart';
@@ -160,7 +161,7 @@ class SuccessfulPaymentContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${detailsResponse.data?.totalAmount} ج.م",
+                "${PrefsHelper.getString(key: PrefsKey.totalAmount)} ج.م",
                 style: Styles.textStyle24.copyWith(
                   color: ColorManager.texColor,
                 ),
