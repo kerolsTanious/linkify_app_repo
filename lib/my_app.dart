@@ -16,11 +16,14 @@ import 'package:linkify_app/features/home/presentation/view_model/get_all_brands
 import 'package:linkify_app/features/home/presentation/view_model/get_all_categories_cubit/get_all_categories_cubit.dart';
 import 'package:linkify_app/features/home/presentation/view_model/get_all_products_by_category_id/get_all_products_by_category_id_cubit.dart';
 import 'package:linkify_app/features/home/presentation/view_model/get_categories_by_brand_id/get_categories_brand_id_cubit.dart';
+import 'package:linkify_app/features/home/presentation/view_model/get_profile_cubit/get_profile_cubit.dart';
+import 'package:linkify_app/features/home/presentation/view_model/update_profile_cubit/update_profile_cubit.dart';
 import 'package:linkify_app/features/payment/presentation/view_model/get_order_details/get_order_details_cubit.dart';
 import 'package:linkify_app/features/payment/presentation/view_model/payment_cubit/payment_cubit.dart';
 
 import 'features/home/presentation/view_model/change_brand_screen_body/change_brand_screen_body_cubit.dart';
 import 'features/home/presentation/view_model/get_categories_in_brand/get_categories_in_brand_cubit.dart';
+import 'features/home/presentation/view_model/search_cubit/search_cubit.dart';
 import 'features/payment/data/repo_impl/payment_repo_impl.dart';
 import 'features/payment/presentation/view_model/create_order_cubit/create_order_cubit.dart';
 
@@ -99,6 +102,20 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (context) => GetOrderDetailsCubit(
                 paymentRepo: getIt.get<PaymentRepoImpl>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  GetProfileCubit(homeRepo: getIt.get<HomeRepoImpl>()),
+            ),
+            BlocProvider(
+              create: (context) => UpdateProfileCubit(
+                homeRepo: getIt.get<HomeRepoImpl>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => SearchCubit(
+                homeRepo: getIt.get<HomeRepoImpl>(),
               ),
             ),
           ],

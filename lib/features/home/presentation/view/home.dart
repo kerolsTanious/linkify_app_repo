@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
 import 'package:linkify_app/core/utils/color_manager.dart';
 import 'package:linkify_app/features/home/presentation/view/brands_screen/brands_screen.dart';
+import 'package:linkify_app/features/home/presentation/view/profile_screen/profile_screen.dart';
 import 'package:linkify_app/features/home/presentation/view_model/get_categories_in_brand/get_categories_in_brand_cubit.dart';
 import 'package:linkify_app/features/home/presentation/view_model/get_categories_in_brand/get_categories_in_brand_state.dart';
 
@@ -16,9 +17,7 @@ class Home extends StatefulWidget {
   static List<Widget> screensBody = [
     HomeScreen(),
     BrandsScreen(),
-    Container(
-      color: Colors.black,
-    ),
+    ProfileScreen(),
   ];
 
   @override

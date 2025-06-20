@@ -147,7 +147,7 @@ class CartScreenListViewItem extends StatelessWidget {
                                     ),
                                   );
                               Fluttertoast.showToast(
-                                  msg: "🗑️ تم حذف المنتج من سلة المشتريات",
+                                  msg: "تم حذف المنتج من سلة المشتريات 🗑️",
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                   timeInSecForIosWeb: 1,

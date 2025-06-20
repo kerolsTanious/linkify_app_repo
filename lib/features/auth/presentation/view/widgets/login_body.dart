@@ -36,6 +36,7 @@ class _LoginBodyState extends State<LoginBody> {
     super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
+    context.read<CreateNewCustomerCubit>().createNewCustomer();
   }
 
   @override
@@ -189,11 +190,13 @@ class _LoginBodyState extends State<LoginBody> {
                             AssetsManager.company2,
                           ),
                           SizedBox(height: 10),
-                          Text(
-                            "شركة",
-                            style: Styles.textStyle16.copyWith(
-                              color: ColorManager.texColor,
-                              fontWeight: FontWeight.w700,
+                          Expanded(
+                            child: Text(
+                              "شركة",
+                              style: Styles.textStyle16.copyWith(
+                                color: ColorManager.texColor,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         ],
@@ -227,11 +230,13 @@ class _LoginBodyState extends State<LoginBody> {
                             AssetsManager.merchant,
                           ),
                           SizedBox(height: 10),
-                          Text(
-                            "تاجر",
-                            style: Styles.textStyle16.copyWith(
-                              color: ColorManager.texColor,
-                              fontWeight: FontWeight.w700,
+                          Expanded(
+                            child: Text(
+                              "تاجر",
+                              style: Styles.textStyle16.copyWith(
+                                color: ColorManager.texColor,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         ],
@@ -250,6 +255,10 @@ class _LoginBodyState extends State<LoginBody> {
                         key: PrefsKey.token,
                         token:
                             state.loginResponseModel.data?.accessToken ?? '');
+                    PrefsHelper.setString(
+                      key: PrefsKey.email,
+                      value: emailController.text,
+                    );
                     Fluttertoast.showToast(
                       msg: "تم تسجيل الدخول بنجاح",
                       toastLength: Toast.LENGTH_SHORT,

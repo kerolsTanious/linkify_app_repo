@@ -27,7 +27,6 @@ class AdminRepoImpl extends AdminRepo {
     required String categoryId,
     required String brandId,
     required String price,
-    required String quantity,
   }) async {
     try {
       final mimeType = lookupMimeType(image.path);
@@ -45,12 +44,14 @@ class AdminRepoImpl extends AdminRepo {
         "name": name,
         "image": multipartImage,
         "description": desc,
-        "quantity": quantity,
         "price": price,
         "brandId": brandId,
         "categoryId": categoryId,
       });
       print('--- Debugging FormData ---');
+      formData.fields.forEach((field) {
+        print('Field: ${field.key} = ${field.value}');
+      });
       formData.fields.forEach((field) {
         print('Field: ${field.key} = ${field.value}');
       });

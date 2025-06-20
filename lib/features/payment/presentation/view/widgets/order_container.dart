@@ -231,7 +231,7 @@ class SuccessfulPaymentContainer extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             horizontal: 30.r, vertical: 15.r),
                         child: Text(
-                          "لم يتم الدفع",
+                          "الدفع عند الاستلام",
                           style: Styles.textStyle24.copyWith(color: Colors.red),
                         ),
                       ),

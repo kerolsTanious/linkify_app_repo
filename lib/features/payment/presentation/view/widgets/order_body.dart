@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkify_app/core/prefs.dart';
 import 'package:linkify_app/core/reusable_components/failure_state_widget.dart';
 import 'package:linkify_app/core/utils/routes.dart';
 import 'package:linkify_app/features/payment/presentation/view/widgets/order_container.dart';
@@ -17,13 +18,16 @@ class OrderBody extends StatelessWidget {
     return BlocBuilder<GetOrderDetailsCubit, GetOrderDetailsState>(
       builder: (context, state) {
         if (state is GetOrderDetailsSuccess) {
+          PrefsHelper.setString(key: PrefsKey.orderId, value: state.orderId);
           return Padding(
             padding: EdgeInsets.only(
                 right: 20.r, left: 20.r, bottom: 40.r, top: 60.r),
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                SuccessfulPaymentContainer(detailsResponse: state.getOrderDetailsResponse,),
+                SuccessfulPaymentContainer(
+                  detailsResponse: state.getOrderDetailsResponse,
+                ),
                 Positioned(
                   left: -20.r,
                   bottom: MediaQuery.sizeOf(context).height * 0.20,

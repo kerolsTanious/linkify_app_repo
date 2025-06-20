@@ -221,11 +221,13 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
                           AssetsManager.company2,
                         ),
                         SizedBox(height: 10),
-                        Text(
-                          "شركة",
-                          style: Styles.textStyle16.copyWith(
-                            color: ColorManager.texColor,
-                            fontWeight: FontWeight.w700,
+                        Expanded(
+                          child: Text(
+                            "شركة",
+                            style: Styles.textStyle16.copyWith(
+                              color: ColorManager.texColor,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ],
@@ -259,11 +261,13 @@ class _SignUpScreenBodyState extends State<SignUpScreenBody> {
                           AssetsManager.merchant,
                         ),
                         SizedBox(height: 10),
-                        Text(
-                          "تاجر",
-                          style: Styles.textStyle16.copyWith(
-                            color: ColorManager.texColor,
-                            fontWeight: FontWeight.w700,
+                        Expanded(
+                          child: Text(
+                            "تاجر",
+                            style: Styles.textStyle16.copyWith(
+                              color: ColorManager.texColor,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ],

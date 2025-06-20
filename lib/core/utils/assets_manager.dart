@@ -27,6 +27,9 @@ abstract class AssetsManager {
   static const String ad1 = "assets/images/ad1.png";
   static const String ad2 = "assets/images/ad2.png";
   static const String ad3 = "assets/images/ad3.png";
+  static const String ad4 = "assets/images/ad4.jpeg";
+  static const String ad5 = "assets/images/ad5.jpeg";
+  static const String ad6 = "assets/images/ad6.jpeg";
   static const String plusIcon = "assets/images/plus_icon.svg";
   static const String deleteIcon = "assets/images/delete_icon.svg";
   static const String addToCart = "assets/images/add_To_Cart.gif";
@@ -40,4 +43,6 @@ abstract class AssetsManager {
   static const String report = "assets/images/In no time.gif";
   static const String report2 = "assets/images/In no time (1).gif";
   static const String report3 = "assets/images/In no time (2).gif";
+  static const String profile = "assets/images/Profile Interface.gif";
+  static const String appLogo = "assets/images/app_logo.png";
 }

@@ -12,11 +12,13 @@ class CreateOrderCubit extends Cubit<CreateOrderState> {
     required String token,
     required String cartId,
     required String paymentMethod,
+    required String addressId
   }) async {
     var result = await paymentRepo.createOrder(
       token: token,
       cartId: cartId,
       paymentMethod: paymentMethod,
+      addressId: addressId,
     );
     result.fold(
       (response) {

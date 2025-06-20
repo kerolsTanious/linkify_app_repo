@@ -52,4 +52,7 @@ abstract class EndPoints {
   }
 
   static String adminGetReport = "admin/report-pdf";
+  static String getProfile = "users/profile";
+  static String updateProfile = "users/profile/update-profile";
+  static String search = "subCategory/subCategory-search";
 }

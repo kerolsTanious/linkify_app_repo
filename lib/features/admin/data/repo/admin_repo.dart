@@ -14,7 +14,6 @@ abstract class AdminRepo {
     required String categoryId,
     required String brandId,
     required String price,
-    required String quantity,
   });
 
   Future<Either<AdminDeleteProductResponse, String>> adminDeleteProduct({

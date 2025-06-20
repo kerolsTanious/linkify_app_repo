@@ -8,7 +8,7 @@ abstract class StringsManager {
       "قدّم الطلبات مباشرة من المصانع";
   static const String onboarding3Title = "توصيل سريع وآمن";
   static const String onboarding3Description =
-      "نحن نتولى عملية التوصيل، لضمان وصول طلباتك بسرعة وأمان";
+      "ضمان وصول طلباتك بسرعة وأمان";
   static const String welcomeTextLogin = "مرحبًا بعودتك إلى Linkify";
   static const String welcomeTextTitleLogin = "يرجى تسجيل الدخول باستخدام بريدك الإلكتروني";
   static const String categoryDescription = "الأصناف";

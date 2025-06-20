@@ -10,9 +10,18 @@ class AdminSelectBrandGidView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> brandsEmail = [
+      "juhaynaa1111@gmail.com",
+      "abdalmabod1111@gmail.com",
+      "liptonn49@gmail.com",
+      "aboauf1111@gmail.com",
+      "p2445934@gmail.com",
+      "chipsy838@gmail.com",
+      "cadbury708@gmail.com",
+    ];
     return BlocBuilder<GetAllBrandsCubit, GetAllBrandsState>(
       builder: (context, state) {
-        if(state is GetAllBrandsSuccess){
+        if (state is GetAllBrandsSuccess) {
           return GridView.builder(
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
@@ -23,13 +32,19 @@ class AdminSelectBrandGidView extends StatelessWidget {
               crossAxisSpacing: 1,
             ),
             itemBuilder: (context, index) {
-              return AdminSelectBrandListViewItem(allBrandsData: state.allBrandsData[index],);
+              return AdminSelectBrandListViewItem(
+                allBrandsData: state.allBrandsData[index],
+                email: brandsEmail[index],
+              );
             },
           );
-        }else if(state is GetAllBrandsFailure){
+        } else if (state is GetAllBrandsFailure) {
           return FailureStateWidget(errorMessage: state.errorMessage);
-        }else{
-          return Center(child: CircularProgressIndicator(color: Colors.white,));
+        } else {
+          return Center(
+              child: CircularProgressIndicator(
+            color: Colors.white,
+          ));
         }
       },
     );

@@ -17,7 +17,6 @@ class AdminAddProductCubit extends Cubit<AdminAddProductState> {
     required String categoryId,
     required String brandId,
     required String price,
-    required String quantity,
   }) async {
     emit(AdminAddProductLoading());
     var result = await adminRepo.adminAddProduct(
@@ -28,7 +27,6 @@ class AdminAddProductCubit extends Cubit<AdminAddProductState> {
       categoryId: categoryId,
       brandId: brandId,
       price: price,
-      quantity: quantity,
     );
     result.fold(
       (response) {

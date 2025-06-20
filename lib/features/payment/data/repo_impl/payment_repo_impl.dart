@@ -62,6 +62,7 @@ class PaymentRepoImpl extends PaymentRepo {
     required String token,
     required String cartId,
     required String paymentMethod,
+    required String addressId,
   }) async {
     try {
       var response = await apiManager.postRequest(
@@ -70,6 +71,7 @@ class PaymentRepoImpl extends PaymentRepo {
           body: {
             "cartId": cartId,
             "paymentMethod": paymentMethod,
+            "addressId": addressId,
           },
           headers: {
             "Authorization": "Bearer $token",

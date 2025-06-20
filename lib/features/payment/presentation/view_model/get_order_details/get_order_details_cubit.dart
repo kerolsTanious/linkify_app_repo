@@ -16,7 +16,8 @@ class GetOrderDetailsCubit extends Cubit<GetOrderDetailsState> {
     );
     result.fold(
       (response) {
-        emit(GetOrderDetailsSuccess(getOrderDetailsResponse: response));
+        emit(GetOrderDetailsSuccess(
+            getOrderDetailsResponse: response, orderId: orderId));
       },
       (error) {
         emit(GetOrderDetailsFailure(error: error));

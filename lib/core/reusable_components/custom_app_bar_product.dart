@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:linkify_app/core/utils/assets_manager.dart';
 import 'package:linkify_app/core/utils/color_manager.dart';
 import 'package:linkify_app/core/utils/routes.dart';
+import 'package:linkify_app/core/utils/styles_manager.dart';
 
 import '../../features/cart/prasentation/view_model/add_to_cart_cubit/add_to_cart_cubit.dart';
 import '../prefs.dart';
@@ -38,23 +39,10 @@ class CustomAppBarProduct extends StatelessWidget {
               ),
               SizedBox(width: 10.w),
               Expanded(
-                child: Container(
-                  height: 50.h,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: ColorManager.mainColor,
-                        width: 1.5.w,
-                        style: BorderStyle.solid),
-                    borderRadius: BorderRadius.circular(25.r),
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox(width: 17.w),
-                      const Icon(
-                        Icons.search_outlined,
-                        color: ColorManager.mainColor,
-                      ),
-                    ],
+                child: Center(
+                  child: Text(
+                    "المنتجات",
+                    style: Styles.textStyle24,
                   ),
                 ),
               ),

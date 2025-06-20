@@ -74,6 +74,17 @@ class _AddressBodyState extends State<AddressBody> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    phoneController.dispose();
+    recipientNameController.dispose();
+    locationController.dispose();
+    streetController.dispose();
+    notesController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
@@ -117,7 +128,6 @@ class _AddressBodyState extends State<AddressBody> {
                         title: Text(locations[index]),
                         onTap: () {
                           Navigator.pop(context, locations[index]);
-                          print("locationnnnnnnnn ${locations[index]}");
                         },
                       );
                     },
@@ -195,8 +205,8 @@ class _AddressBodyState extends State<AddressBody> {
           ),
           SizedBox(height: 50.h),
           BlocListener<SaveAddressCubit, SaveAddressState>(
-            listener: (context, state) {
-              if (state is SaveAddressSuccess) {
+            listener: (context, saveState) {
+              if (saveState is SaveAddressSuccess) {
                 showModalBottomSheet(
                   context: context,
                   shape: RoundedRectangleBorder(
@@ -262,11 +272,15 @@ class _AddressBodyState extends State<AddressBody> {
                                     onTap: () {
                                       BlocProvider.of<CreateOrderCubit>(context)
                                           .createOrder(
-                                        token: PrefsHelper.getToken(
-                                            key: PrefsKey.token),
-                                        cartId: widget.cartId,
-                                        paymentMethod: "cash_on_delivery",
-                                      );
+                                              token: PrefsHelper.getToken(
+                                                  key: PrefsKey.token),
+                                              cartId: widget.cartId,
+                                              paymentMethod: "cash_on_delivery",
+                                              addressId: saveState
+                                                      .saveAddressResponse
+                                                      .data
+                                                      ?.id ??
+                                                  "");
                                       selectedPaymentMethod =
                                           "cash_on_delivery";
                                     },
@@ -325,6 +339,11 @@ class _AddressBodyState extends State<AddressBody> {
                                           token: PrefsHelper.getToken(
                                               key: PrefsKey.token),
                                           cartId: widget.cartId,
+                                          addressId: saveState
+                                                  .saveAddressResponse
+                                                  .data
+                                                  ?.id ??
+                                              "",
                                           paymentMethod: "credit_card",
                                         );
                                         selectedPaymentMethod = "credit_card";
@@ -366,9 +385,9 @@ class _AddressBodyState extends State<AddressBody> {
                     );
                   },
                 );
-              } else if (state is SaveAddressFailure) {
+              } else if (saveState is SaveAddressFailure) {
                 Fluttertoast.showToast(
-                  msg: state.errorMessage,
+                  msg: saveState.errorMessage,
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
                   timeInSecForIosWeb: 1,

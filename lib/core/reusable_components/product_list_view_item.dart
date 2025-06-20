@@ -100,17 +100,6 @@ class ProductListViewItem extends StatelessWidget {
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 5,
-                    top: 5,
-                  ),
-                  child: InkWell(
-                    onTap: () {},
-                    splashColor: Colors.transparent,
-                    child: Icon(Icons.favorite_border),
-                  ),
-                ),
               ],
             ),
             Padding(

@@ -30,7 +30,6 @@ class AdminAddProductBody extends StatefulWidget {
 class _AddProductPageState extends State<AdminAddProductBody> {
   late TextEditingController nameController;
   late TextEditingController descController;
-  late TextEditingController quantityController;
   late TextEditingController priceController;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -46,7 +45,6 @@ class _AddProductPageState extends State<AdminAddProductBody> {
     super.initState();
     nameController = TextEditingController();
     descController = TextEditingController();
-    quantityController = TextEditingController();
     priceController = TextEditingController();
 
     context
@@ -54,7 +52,26 @@ class _AddProductPageState extends State<AdminAddProductBody> {
         .getCategoriesByBrandId(brandId: widget.brandId);
   }
 
+  @override
+  void dispose() {
+    nameController.dispose();
+    descController.dispose();
+    priceController.dispose();
+    super.dispose();
+  }
+
   final ImagePicker picker = ImagePicker();
+
+  Future<void> pickImageFromGallery() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
 
   Future<void> pickImage() async {
     if (await Permission.photos.request().isGranted ||
@@ -86,18 +103,16 @@ class _AddProductPageState extends State<AdminAddProductBody> {
       print('Uploading file name: ${imageFile?.path.split('/').last}');
 
       context.read<AdminAddProductCubit>().adminAddProduct(
-        token: PrefsHelper.getToken(key: PrefsKey.token),
-        name: nameController.text,
-        desc: descController.text,
-        image: imageFile!,
-        categoryId: categoryId,
-        brandId: widget.brandId,
-        price: priceController.text,
-        quantity: quantityController.text,
-      );
+            token: PrefsHelper.getToken(key: PrefsKey.token),
+            name: nameController.text,
+            desc: descController.text,
+            image: imageFile!,
+            categoryId: categoryId,
+            brandId: widget.brandId,
+            price: priceController.text,
+          );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -204,18 +219,6 @@ class _AddProductPageState extends State<AdminAddProductBody> {
             SizedBox(height: 10.h),
             CustomAuthTextFormFiled(
               textInputType: TextInputType.number,
-              titleText: "الكمية",
-              hintText: "الكمية",
-              textInputAction: TextInputAction.next,
-              controller: quantityController,
-              validator: (value) {
-                return value!.isEmpty ? 'يرجى إدخال الكمية' : null;
-              },
-              prefixIcon: Icon(Icons.format_list_numbered),
-            ),
-            SizedBox(height: 10.h),
-            CustomAuthTextFormFiled(
-              textInputType: TextInputType.number,
               titleText: "السعر",
               hintText: "السعر",
               textInputAction: TextInputAction.done,
@@ -240,7 +243,7 @@ class _AddProductPageState extends State<AdminAddProductBody> {
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.file(
-                        imageFile!,
+                        imageFile ?? File(""),
                         height: 150.h,
                         fit: BoxFit.cover,
                       ),
@@ -271,13 +274,15 @@ class _AddProductPageState extends State<AdminAddProductBody> {
                       textColor: Colors.white,
                       fontSize: 16.0);
                 }
+                print("================================================> $imageFile");
               },
               builder: (context, state) {
                 if (state is AdminAddProductLoading) {
                   return Center(
-                      child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ));
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  );
                 }
                 return CustomAuthButton(
                   onTap: submitForm,

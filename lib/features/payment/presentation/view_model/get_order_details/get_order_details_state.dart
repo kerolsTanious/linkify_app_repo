@@ -6,8 +6,10 @@ final class GetOrderDetailsInitial extends GetOrderDetailsState {}
 
 final class GetOrderDetailsSuccess extends GetOrderDetailsState {
   final GetOrderDetailsResponse getOrderDetailsResponse;
+  final String orderId;
 
-  GetOrderDetailsSuccess({required this.getOrderDetailsResponse});
+  GetOrderDetailsSuccess(
+      {required this.orderId, required this.getOrderDetailsResponse});
 }
 
 final class GetOrderDetailsFailure extends GetOrderDetailsState {

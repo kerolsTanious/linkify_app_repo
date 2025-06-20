@@ -1,22 +1,41 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:linkify_app/core/prefs.dart';
 import 'package:linkify_app/core/utils/color_manager.dart';
 import 'package:linkify_app/core/utils/routes.dart';
 import 'package:linkify_app/core/utils/styles_manager.dart';
 import 'package:linkify_app/features/home/data/model/get_all_brands_model/AllBrandsData.dart';
 
 class AdminSelectBrandListViewItem extends StatelessWidget {
-  const AdminSelectBrandListViewItem({super.key, required this.allBrandsData});
+  const AdminSelectBrandListViewItem({
+    super.key,
+    required this.allBrandsData,
+    required this.email,
+  });
 
   final AllBrandsData allBrandsData;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.go(RoutesManager.kAdminHome, extra: allBrandsData.id);
+        if(PrefsHelper.getString(key: PrefsKey.email) == email){
+          context.go(RoutesManager.kAdminHome, extra: allBrandsData.id);
+        }else{
+          Fluttertoast.showToast(
+              msg: "خطأ في اختيار الشركة",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
+        }
       },
       child: Container(
         margin: REdgeInsets.symmetric(
@@ -62,9 +81,8 @@ class AdminSelectBrandListViewItem extends StatelessWidget {
                         image: imageProvider,
                       ),
                       borderRadius: BorderRadius.circular(25.r),
-                      border: Border.all(
-                          color: Colors.grey.shade300,
-                          width: 2.w),
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 2.w),
                     ),
                   );
                 },
@@ -76,10 +94,8 @@ class AdminSelectBrandListViewItem extends StatelessWidget {
               maxLines: 1,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              style: Styles.textStyle18.copyWith(
-                fontWeight: FontWeight.w700,
-                color: Colors.white
-              ),
+              style: Styles.textStyle18
+                  .copyWith(fontWeight: FontWeight.w700, color: Colors.white),
             )
           ],
         ),

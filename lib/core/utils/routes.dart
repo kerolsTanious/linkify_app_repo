@@ -18,7 +18,10 @@ import 'package:linkify_app/features/auth/presentation/view/reset_password.dart'
 import 'package:linkify_app/features/auth/presentation/view/sign_up.dart';
 import 'package:linkify_app/features/cart/prasentation/view/cart_screen.dart';
 import 'package:linkify_app/features/home/data/model/get_all_products_by_category_id/GetAllProductsByCategoryIdData.dart';
+import 'package:linkify_app/features/home/data/model/search_model/SearchResponse.dart';
 import 'package:linkify_app/features/home/presentation/view/home.dart';
+import 'package:linkify_app/features/home/presentation/view/home_screen/widgets/search_result.dart';
+import 'package:linkify_app/features/home/presentation/view/profile_screen/profile_screen.dart';
 import 'package:linkify_app/features/on_boarding/presentation/view/onboarding.dart';
 import 'package:linkify_app/features/payment/presentation/view/address.dart';
 import 'package:linkify_app/features/splash/presentation/view/splash.dart';
@@ -47,6 +50,8 @@ abstract class RoutesManager {
   static const String kAdminUpdateProduct = "/adminUpdateProduct";
   static const String kAdminUpdateProductScreen = "/adminUpdateProductScreen";
   static const String kAdminGetReport = "/adminGetReport";
+  static const String kProfile = "/adminProfile";
+  static const String kSearchResult = "/SearchResult";
   static GoRouter route = GoRouter(
     routes: [
       GoRoute(
@@ -129,6 +134,10 @@ abstract class RoutesManager {
         builder: (context, state) => const ConfirmEmail(),
       ),
       GoRoute(
+        path: kProfile,
+        builder: (context, state) => ProfileScreen(),
+      ),
+      GoRoute(
         path: kAdminUpdateProductScreen,
         builder: (context, state) {
           final GetAllProductsByCategoryIdData productData =
@@ -187,6 +196,13 @@ abstract class RoutesManager {
           return Order(
             orderId: orderId,
           );
+        },
+      ),
+      GoRoute(
+        path: kSearchResult,
+        builder: (context, state) {
+          final SearchResponse searchResponse = state.extra as SearchResponse;
+          return SearchResult(searchResponse: searchResponse);
         },
       ),
     ],

@@ -10,9 +10,9 @@ class HomeScreenBodyAdsList extends StatelessWidget {
   });
 
   final List<String> ads = [
-    AssetsManager.ad3,
-    AssetsManager.ad2,
-    AssetsManager.ad1,
+    AssetsManager.ad4,
+    AssetsManager.ad5,
+    AssetsManager.ad6,
   ];
 
   @override

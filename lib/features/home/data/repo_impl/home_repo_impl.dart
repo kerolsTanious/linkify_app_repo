@@ -6,6 +6,9 @@ import 'package:linkify_app/features/home/data/model/get_all_brands_model/GetAll
 import 'package:linkify_app/features/home/data/model/get_all_categories_model/GetAllCategoriesResponse.dart';
 import 'package:linkify_app/features/home/data/model/get_all_products_by_category_id/GetAllProductsByCategoryIdResponse.dart';
 import 'package:linkify_app/features/home/data/model/get_categories_by_brand_id/GetCategoriesByBrandIdResponse.dart';
+import 'package:linkify_app/features/home/data/model/get_profile_model/GetProfileResponse.dart';
+import 'package:linkify_app/features/home/data/model/search_model/SearchResponse.dart';
+import 'package:linkify_app/features/home/data/model/update_profile_model/UpdateProfileResponse.dart';
 import 'package:linkify_app/features/home/data/repo/home_repo.dart';
 
 class HomeRepoImpl extends HomeRepo {
@@ -92,6 +95,88 @@ class HomeRepoImpl extends HomeRepo {
         return Left(getCategoriesByBrandIdResponse);
       } else {
         return Right("Something went wrong. Please try again later.");
+      }
+    } catch (error) {
+      return Right(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<GetProfileResponse, String>> getProfile(
+      {required String token, required String role}) async {
+    try {
+      var response = await apiManager.getRequest(
+        baseUrl: Constants.baseUrl,
+        endPoint: EndPoints.getProfile,
+        headers: {"Authorization": "$role $token"},
+      );
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        GetProfileResponse getProfileResponse =
+            GetProfileResponse.fromJson(response.data);
+        return Left(getProfileResponse);
+      } else {
+        final errorMsg = response.data['message'] ?? "something went wrong!";
+        return Right(errorMsg);
+      }
+    } catch (error) {
+      return Right(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<UpdateProfileResponse, String>> updateProfile({
+    required String token,
+    required String role,
+    String? name,
+    String? phone,
+  }) async {
+    try {
+      var response = await apiManager.patchRequest(
+        baseUrl: Constants.baseUrl,
+        endPoint: EndPoints.updateProfile,
+        body: {
+          "username": name,
+          "phone": phone,
+        },
+        headers: {"Authorization": "$role $token"},
+      );
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        UpdateProfileResponse updateProfileResponse =
+            UpdateProfileResponse.fromJson(response.data);
+        return Left(updateProfileResponse);
+      } else {
+        final errorMsg = response.data['message'] ?? "something went wrong!";
+        return Right(errorMsg);
+      }
+    } catch (error) {
+      return Right(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<SearchResponse, String>> search(
+      {required String token, required String query}) async {
+    try {
+      var response = await apiManager.getRequest(
+        baseUrl: Constants.baseUrl,
+        endPoint: EndPoints.search,
+        headers: {"Authorization": "Bearer $token"},
+        params: {
+          "query": query,
+        },
+      );
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        SearchResponse searchResponse = SearchResponse.fromJson(response.data);
+        return Left(searchResponse);
+      } else {
+        final errorMsg = response.data['message'] ?? "something went wrong!";
+        return Right(errorMsg);
       }
     } catch (error) {
       return Right(error.toString());
